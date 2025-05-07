@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome | Carmen & Tyler</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="css/main.css" />
+      </head>
+<body class="bg-[#d7d3c7] text-gray-800">
+  <!-- Navigation Include -->
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+  </script>
+
+  <!-- Hero Section -->
+  <section class="relative w-full h-screen flex items-center justify-center text-center text-white">
+    <!-- Background Image -->
+    <img src="images/homebackground.jpg" alt="Couple Background" class="absolute inset-0 w-full h-full object-cover opacity-80" />
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-[#8385be]/60"></div>
+    <!-- Organic Blob Behind Text -->
+    <svg class="absolute z-0 w-[40vw] h-[40vw] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[#93a664] opacity-60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M47.8,-59.1C60.9,-49.6,70.1,-33.3,72.1,-17.6C74.2,-1.9,69.1,13.3,61.6,28.5C54.1,43.6,44.2,58.8,30.2,67.6C16.3,76.5,-1.8,78.9,-18.5,74.3C-35.2,69.6,-50.6,58,-61.5,43.1C-72.4,28.2,-78.9,10.1,-75.5,-6.4C-72.1,-22.9,-58.8,-37.9,-44.1,-47.3C-29.4,-56.7,-14.7,-60.6,1.8,-62.8C18.3,-65,36.6,-65.6,47.8,-59.1Z" transform="translate(100 100)" />
+    </svg>
+    <!-- Text Content -->
+    <div class="relative z-10 px-6">
+      <h2 class="text-6xl sm:text-7xl font-bold mb-6">Carmen & Tyler</h2>
+      <p class="text-2xl sm:text-3xl">September 27, 2025</p>
+    </div>
+    <!-- Adjusted Decorative Squiggle -->
+    
+  </section>
+</body>
+</html>

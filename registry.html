@@ -1,0 +1,24 @@
+<!-- registry.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registry | Carmen & Tyler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="bg-[#efa522] text-white pt-24">
+    <div id="nav-placeholder"></div>
+    <script>
+      fetch('nav.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+    </script>
+  <section class="p-10 text-center">
+    <h2 class="text-3xl font-semibold mb-4">Registry</h2>
+    <p>We are registered at Zola, Amazon, and Crate & Barrel.</p>
+    <a href="#" class="inline-block mt-4 bg-white text-[#efa522] font-semibold px-4 py-2 rounded-full">View Our Registry</a>
+  </section>
+</body>
+</html>

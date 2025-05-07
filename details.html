@@ -1,0 +1,26 @@
+<!-- details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Details | Carmen & Tyler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="bg-[#d7d3c7] text-gray-800 pt-24">
+    <!-- Navigation Include -->
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+  </script>
+  <section class="bg-white p-10 rounded-xl max-w-3xl mx-auto shadow">
+    <h2 class="text-3xl font-semibold text-[#bf6372] mb-4">Event Details</h2>
+    <p>Date: September 27th, 2025</p>
+    <p>Location: Ponce City Rooftop, Atlanta, Georgia</p>
+    <p>More details coming soon!</p>
+  </section>
+</body>
+</html>

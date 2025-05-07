@@ -1,0 +1,121 @@
+<!-- story.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story | Carmen & Tyler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="bg-gradient-to-br from-[#efa522] via-[#dfa6ad] to-[#8385be] text-gray-800 overflow-x-hidden">
+
+  <!-- Navigation Include -->
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+  </script>
+
+  <!-- Fixed Cards Stack -->
+  <div id="cards">
+    <!-- Card 1: Abby -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[90] transform -translate-x-1/2 transition-transform">
+      <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Abby</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Maid of Honor</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Abby is the bride’s sister and childhood best friend, always ready with a smile and a hug.</div>
+    </div>
+    <!-- Card 2: Austin -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[80] transform -translate-x-1/2 transition-transform">
+      <img src="images/austin.jpg" alt="Austin" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Austin</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Best Man</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Austin’s unwavering support has been a cornerstone in our journey together.</div>
+    </div>
+    <!-- Card 3: Brooke -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[70] transform -translate-x-1/2 transition-transform">
+      <img src="images/brooke.jpg" alt="Brooke" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Brooke</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Brooke brings creativity and joy to every moment we share.</div>
+    </div>
+    <!-- Card 4: Holland -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[60] transform -translate-x-1/2 transition-transform">
+      <img src="images/holland.jpg" alt="Holland" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Holland</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Holland’s adventurous spirit makes every adventure unforgettable.</div>
+    </div>
+    <!-- Card 5: Atticus -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[50] transform -translate-x-1/2 transition-transform">
+      <img src="images/atticus.jpg" alt="Atticus" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Atticus</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Groomsman</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Atticus’s sense of humor has kept us laughing through it all.</div>
+    </div>
+    <!-- Card 6: Kyrsten -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[40] transform -translate-x-1/2 transition-transform">
+      <img src="images/kyrsten.jpg" alt="Kyrsten" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Kyrsten</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Kyrsten lights up every room with her laughter and has been a constant source of joy and support.</div>
+    </div>
+    <!-- Card 7: Lilli -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[30] transform -translate-x-1/2 transition-transform">
+      <img src="images/lilli.jpg" alt="Lilli" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Lilli</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Lilli’s warm heart and kindness make her an irreplaceable friend.</div>
+    </div>
+    <!-- Card 8: Clark -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[20] transform -translate-x-1/2 transition-transform">
+      <img src="images/clark.jpg" alt="Clark" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Clark</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Groomsman</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Clark’s steadfast loyalty has been a true gift in our lives.</div>
+    </div>
+    <!-- Card 9: McKenzie -->
+    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[10] transform -translate-x-1/2 transition-transform">
+      <img src="images/mckenzie.jpg" alt="McKenzie" class="w-full h-full object-cover" />
+      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">McKenzie</div>
+      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">McKenzie has been by our side through every adventure, from midnight dance parties to cross-country road trips.</div>
+    </div>
+  </div>
+
+  <!-- Spacer (9 × 100vh) -->
+  <div class="h-[900vh]"></div>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const header = document.getElementById('nav-placeholder');
+    const verticalFactor = 0.6; // adjust vertical centering factor
+
+    function updateCards() {
+      const vh = window.innerHeight;
+      const headerH = header.offsetHeight;
+      const cardH = vh * 0.85;
+      const free = vh - headerH - cardH;
+      const topOffset = headerH + free * verticalFactor;
+
+      cards.forEach((card, i) => {
+        card.style.top = `${topOffset}px`;
+
+        let prog = (window.scrollY - i * vh) / vh;
+        prog = Math.min(Math.max(prog, 0), 1);
+        const tx = prog * window.innerWidth;
+        const rot = prog * 15;
+        card.style.transform = `translate(-50%, 0) translateX(${tx}px) rotate(${rot}deg)`;
+        card.style.opacity = `${1 - prog}`;
+      });
+    }
+
+    window.addEventListener('load', updateCards);
+    window.addEventListener('scroll', updateCards);
+    window.addEventListener('resize', updateCards);
+  </script>
+
+</body>
+</html>

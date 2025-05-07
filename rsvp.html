@@ -1,0 +1,54 @@
+<!-- rsvp.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP | Carmen & Tyler</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="bg-[#d7d3c7] text-gray-800 pt-24">
+    <div id="nav-placeholder"></div>
+    <script>
+      fetch('nav.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+    </script>
+  <section class="p-10 max-w-2xl mx-auto">
+    <h2 class="text-3xl font-semibold text-[#dfa6ad] mb-4">RSVP</h2>
+    <form id="rsvpForm" class="space-y-4" action="https://sheetmonkey.io/form/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" class="w-full p-2 border rounded" required />
+      <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-2 border rounded" required />
+
+      <div id="eventOptions" class="hidden space-y-2">
+        <label><input type="checkbox" name="attending[]" value="Ceremony" /> Ceremony</label><br />
+        <label><input type="checkbox" name="attending[]" value="Reception" /> Reception</label><br />
+        <label id="rehearsalOption" class="hidden"><input type="checkbox" name="attending[]" value="Rehearsal Dinner" /> Rehearsal Dinner</label>
+      </div>
+
+      <textarea name="notes" placeholder="Dietary restrictions or a note for us :)" class="w-full p-2 border rounded"></textarea>
+      <button type="submit" class="bg-[#93a664] text-white px-4 py-2 rounded-full">Submit RSVP</button>
+    </form>
+  </section>
+  <script>
+    const guestList = {
+      "alex@example.com": ["Ceremony", "Reception", "Rehearsal Dinner"],
+      "jamie@example.com": ["Ceremony", "Reception"]
+    };
+    const emailInput = document.getElementById("email");
+    const eventOptions = document.getElementById("eventOptions");
+    const rehearsalOption = document.getElementById("rehearsalOption");
+    emailInput.addEventListener("blur", () => {
+      const email = emailInput.value.toLowerCase();
+      if (guestList[email]) {
+        eventOptions.classList.remove("hidden");
+        rehearsalOption.classList.toggle("hidden", !guestList[email].includes("Rehearsal Dinner"));
+      } else {
+        eventOptions.classList.add("hidden");
+        rehearsalOption.classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
