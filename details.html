@@ -1,26 +1,55 @@
-<!-- details.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event Details | Carmen & Tyler</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Main CSS -->
   <link rel="stylesheet" href="css/main.css" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Merriweather + Great Vibes Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet" />
 </head>
-<body class="bg-[#d7d3c7] text-gray-800 pt-24">
-    <!-- Navigation Include -->
-  <div id="nav-placeholder"></div>
+<body class="bg-[#d7d3c7] text-gray-800 pt-24 font-serif">
+
+  <!-- Navigation Include -->
+  <header id="site-nav" class="fixed top-0 w-full z-50"></header>
   <script>
     fetch('nav.html')
       .then(res => res.text())
-      .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+      .then(html => document.getElementById('site-nav').innerHTML = html);
   </script>
-  <section class="bg-white p-10 rounded-xl max-w-3xl mx-auto shadow">
-    <h2 class="text-3xl font-semibold text-[#bf6372] mb-4">Event Details</h2>
-    <p>Date: September 27th, 2025</p>
-    <p>Location: Ponce City Rooftop, Atlanta, Georgia</p>
-    <p>More details coming soon!</p>
+
+  <!-- Date Blob -->
+  <section class="relative flex justify-center items-center h-80 mt-12">
+    <div class="absolute inset-0 flex justify-center items-center">
+      <div class="w-3/4 h-3/4" 
+           style="background: url('images/poncecityroof.jpeg') center/cover; background-size: cover; border-radius: 42% 58% 56% 44% / 56% 42% 58% 44%;">
+      </div>
+    </div>
+    <h1 class="relative text-gray-100 text-6xl italic text-center drop-shadow-lg" style="font-family: 'Great Vibes', cursive;">September 27, 2025</h1>
   </section>
+
+  <!-- Details Blob Card -->
+  <main class="max-w-4xl mx-auto mt-16 mb-16 relative">
+    <div class="absolute -top-16 -left-16 w-48 h-48"
+         style="background: url('images/poncesign.jpg') center/cover; background-size: cover; border-radius: 52% 48% 37% 63% / 49% 57% 43% 51%;">
+    </div>
+    <div class="bg-white bg-opacity-90 p-12 rounded-2xl shadow-lg relative">
+      <h2 class="text-4xl font-semibold text-[#bf6372] mb-6" style="font-family: 'Great Vibes', cursive;">Event Details</h2>
+      <p class="text-lg mb-3"><strong>Location:</strong> Ponce City Rooftop, Atlanta, Georgia</p>
+      <p class="text-lg mb-3"><strong>Schedule:</strong></p>
+      <ul class="list-disc list-inside text-lg space-y-1">
+        <li>5:00 PM – Venue Opens</li>
+        <li>5:30 PM – Ceremony</li>
+        <li>6:00 PM – Cocktail Hour</li>
+        <li>7:00 PM – Dinner & Toasts</li>
+        <li>9:00 PM – Dancing</li>
+        <li>11:00 PM – Sendoff</li>
+      </ul>
+    </div>
+  </main>
+
 </body>
 </html>
