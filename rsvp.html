@@ -12,13 +12,33 @@
   let invitedNames = [];
 
   document.addEventListener('DOMContentLoaded', () => {
+    // Fetch names but don't populate yet
     fetch(`${SCRIPT_URL}?action=list`)
       .then(res => res.json())
       .then(data => {
         invitedNames = data.names || [];
-        populateNameDatalist();
       });
 
+    // Get references
+    const nameInput = document.querySelector('input[name="name"]');
+    const dataList  = document.getElementById('invited-names');
+
+    // Only populate datalist once user types ≥ 3 chars
+    nameInput.addEventListener('input', e => {
+      const val = e.target.value.trim().toLowerCase();
+      dataList.innerHTML = '';           // clear old options
+      if (val.length >= 3) {
+        invitedNames
+          .filter(n => n.toLowerCase().includes(val))   // or use .startsWith(val)
+          .forEach(n => {
+            const opt = document.createElement('option');
+            opt.value = n;
+            dataList.appendChild(opt);
+          });
+      }
+    });
+
+    // Rest of your name‐step logic…
     const params = new URLSearchParams(location.search);
     const name = params.get('name');
     if (!name) {
@@ -27,15 +47,6 @@
       checkRegistration(name);
     }
   });
-
-  function populateNameDatalist() {
-    const dataList = document.getElementById('invited-names');
-    invitedNames.forEach(n => {
-      const option = document.createElement('option');
-      option.value = n;
-      dataList.appendChild(option);
-    });
-  }
 
   function checkRegistration(name) {
     fetch(`${SCRIPT_URL}?action=check&name=${encodeURIComponent(name)}`)
