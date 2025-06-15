@@ -153,6 +153,13 @@
     }
 
 
+    if (data.partnerAlready) {
+        const info = document.getElementById('partner-locked-info');
+        // data.extraInviteName holds the partner's name (or primary’s name if this is the extra)
+        info.textContent = `${data.extraInviteName} has already RSVPed.`;
+        info.classList.remove('hidden');
+    }
+    
     // If partnerAlready and there's a child, update that message too
     if (data.partnerAlready && data.child) {
         const partnerInfo = document.getElementById('partner-locked-info');
@@ -160,12 +167,6 @@
             `${data.extraInviteName} has already RSVPed for themselves and ${data.child}. `
     }
 
-    if (data.partnerAlready) {
-        const info = document.getElementById('partner-locked-info');
-        // data.extraInviteName holds the partner's name (or primary’s name if this is the extra)
-        info.textContent = `${data.extraInviteName} has already RSVPed.`;
-        info.classList.remove('hidden');
-    }
 
     sec.querySelector('form').addEventListener('submit', e => {
         e.preventDefault(); // prevent default navigation
