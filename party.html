@@ -11,111 +11,135 @@
 <body class="bg-gradient-to-br from-[#efa522] via-[#dfa6ad] to-[#8385be] text-gray-800 overflow-x-hidden">
 
   <!-- Navigation Include -->
-  <div id="nav-placeholder"></div>
-  <script>
-    fetch('nav.html')
-      .then(res => res.text())
-      .then(html => document.getElementById('nav-placeholder').innerHTML = html);
-  </script>
+  <header id="site-nav" class="fixed top-0 w-full z-50"></header>
+
 
   <!-- Fixed Cards Stack -->
   <div id="cards">
     <!-- Card 1: Abby -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[90] transform -translate-x-1/2 transition-transform">
+        
+
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
       <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Abby</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Maid of Honor</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Abby is the bride’s sister and childhood best friend, always ready with a smile and a hug.</div>
+      <div class="absolute left-6
+            bottom-4           /*  0.5rem on phones */
+            sm:bottom-8        /*  2rem on ≥640px */
+            md:bottom-12       /*  3rem on ≥768px */
+            lg:bottom-16       /*  4rem on ≥1024px */
+            xl:bottom-20       /*  5rem on ≥1280px */
+            flex flex-col
+            space-y-1 sm:space-y-2 md:space-y-3 lg:space-y-4
+            max-w-[80%]">
+            <!-- name -->
+            <h2 class="text-2xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-lg">Abby</h2>
+            <!-- title -->
+            <p class="text-sm sm:text-md md:text-lg font-semibold text-white drop-shadow-lg">Maid of Honor</p>
+            <!-- summary -->
+            <p class="text-xs sm:text-base md:text-xl text-white drop-shadow-lg">Abby starred a Mexican jumping bean in the 2007 production of Jack and the beanstalk.</p>
+        </div>
     </div>
     <!-- Card 2: Austin -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[80] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[8] transform -translate-x-1/2 transition-transform">
       <img src="images/austin.jpg" alt="Austin" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Austin</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Best Man</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Austin’s unwavering support has been a cornerstone in our journey together.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Austin</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Best Man</div>
+      <div class="absolute bottom-16 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Austin’s diet consists of mainly frozen pizzas.</div>
     </div>
     <!-- Card 3: Brooke -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[70] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[7] transform -translate-x-1/2 transition-transform">
       <img src="images/brooke.jpg" alt="Brooke" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Brooke</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Brooke brings creativity and joy to every moment we share.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Brooke</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-16 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Brooke was a CFL cheerleader when she was 10.</div>
     </div>
     <!-- Card 4: Holland -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[60] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[6] transform -translate-x-1/2 transition-transform">
       <img src="images/holland.jpg" alt="Holland" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Holland</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Holland’s adventurous spirit makes every adventure unforgettable.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Holland</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Holland won the highest award at the state opera competition in high school.</div>
     </div>
     <!-- Card 5: Atticus -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[50] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[5] transform -translate-x-1/2 transition-transform">
       <img src="images/atticus.jpg" alt="Atticus" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Atticus</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Groomsman</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Atticus’s sense of humor has kept us laughing through it all.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Atticus</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Groomsman</div>
+      <div class="absolute bottom-8 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Atticus won a trebuchet building competition in 8th grade.</div>
     </div>
     <!-- Card 6: Kyrsten -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[40] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[4] transform -translate-x-1/2 transition-transform">
       <img src="images/kyrsten.jpg" alt="Kyrsten" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Kyrsten</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Kyrsten lights up every room with her laughter and has been a constant source of joy and support.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Kyrsten</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Kyrsten got her black belt when she was 10 years old.</div>
     </div>
     <!-- Card 7: Lilli -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[30] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[3] transform -translate-x-1/2 transition-transform">
       <img src="images/lilli.jpg" alt="Lilli" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Lilli</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Lilli’s warm heart and kindness make her an irreplaceable friend.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Lilli</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Lilli got hit in the face with a field hockey stick in high school and her front tooth fell onto the field.</div>
     </div>
     <!-- Card 8: Clark -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[20] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[2] transform -translate-x-1/2 transition-transform">
       <img src="images/clark.jpg" alt="Clark" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">Clark</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Groomsman</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">Clark’s steadfast loyalty has been a true gift in our lives.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">Clark</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Groomsman</div>
+      <div class="absolute bottom-8 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">Clark almost got attacked by a swan in an open water race.</div>
     </div>
     <!-- Card 9: McKenzie -->
-    <div class="card fixed left-1/2 h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[10] transform -translate-x-1/2 transition-transform">
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh]  aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[1] transform -translate-x-1/2 transition-transform">
       <img src="images/mckenzie.jpg" alt="McKenzie" class="w-full h-full object-cover" />
-      <div class="absolute bottom-32 left-6 text-white text-4xl font-bold drop-shadow-lg">McKenzie</div>
-      <div class="absolute bottom-24 left-6 text-white text-sm font-bold drop-shadow-lg">Bridesmaid</div>
-      <div class="absolute bottom-8 left-6 text-white text-lg max-w-[80%] drop-shadow-lg">McKenzie has been by our side through every adventure, from midnight dance parties to cross-country road trips.</div>
+      <div class="absolute bottom-32 left-6 text-white text-5xl font-bold drop-shadow-lg">McKenzie</div>
+      <div class="absolute bottom-24 left-6 text-white text-md font-bold drop-shadow-lg">Bridesmaid</div>
+      <div class="absolute bottom-8 left-6 text-white text-xl max-w-[80%] drop-shadow-lg">McKenzie was the fifth grade egg drop champion of Jesse Wharton Elementary.</div>
     </div>
   </div>
 
   <!-- Spacer (9 × 100vh) -->
   <div class="h-[900vh]"></div>
 
+
   <script>
-    const cards = document.querySelectorAll('.card');
-    const header = document.getElementById('nav-placeholder');
-    const verticalFactor = 0.6; // adjust vertical centering factor
+    document.addEventListener('DOMContentLoaded', () => {
+    const wrapper   = document.getElementById('site-nav');
+    let   realNav;        // will hold the actual injected <header class="fixed…">
 
+    // 1) Define updateCards so it reads realNav.offsetHeight:
     function updateCards() {
-      const vh = window.innerHeight;
-      const headerH = header.offsetHeight;
-      const cardH = vh * 0.85;
-      const free = vh - headerH - cardH;
-      const topOffset = headerH + free * verticalFactor;
+        const vh      = window.innerHeight;
+        const headerH = realNav?.offsetHeight || 0;        // ← use the real nav’s height
+        const cardH   = cards[0]?.offsetHeight    || 0;
+        const free    = vh - headerH - cardH;
+        const topOff  = headerH + free / 2;
 
-      cards.forEach((card, i) => {
-        card.style.top = `${topOffset}px`;
 
-        let prog = (window.scrollY - i * vh) / vh;
-        prog = Math.min(Math.max(prog, 0), 1);
-        const tx = prog * window.innerWidth;
-        const rot = prog * 15;
-        card.style.transform = `translate(-50%, 0) translateX(${tx}px) rotate(${rot}deg)`;
-        card.style.opacity = `${1 - prog}`;
-      });
+        cards.forEach((c, i) => {
+            c.style.top = `${topOff}px`;
+            let prog = (window.scrollY - i * vh) / vh;
+            prog = Math.min(Math.max(prog, 0), 1);
+            c.style.transform  = `translate(-50%,0) translateX(${prog*window.innerWidth}px) rotate(${prog*15}deg)`;
+            c.style.opacity    = `${1 - prog}`;
+        });
     }
 
-    window.addEventListener('load', updateCards);
-    window.addEventListener('scroll', updateCards);
-    window.addEventListener('resize', updateCards);
-  </script>
+     // grab your cards once
+    const cards = document.querySelectorAll('.card');
 
+    // 2) Fetch & inject, then stash the realNav and call updateCards()
+    fetch('nav.html')
+        .then(res => res.text())
+        .then(html => {
+            wrapper.innerHTML = html;
+            // wrapper’s first child is the real, fixed header
+            realNav = wrapper.querySelector('header.fixed');
+            updateCards();
+    });
+
+    // 3) hook scroll/resize
+    window.addEventListener('scroll',  updateCards);
+    window.addEventListener('resize',  updateCards);
+    });
+  </script>
 </body>
 </html>

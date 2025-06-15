@@ -1,54 +1,376 @@
-<!-- rsvp.html -->
+<!-- index.html (single-page RSVP) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSVP | Carmen & Tyler</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/main.css" />
-</head>
-<body class="bg-[#d7d3c7] text-gray-800 pt-24">
-    <div id="nav-placeholder"></div>
-    <script>
-      fetch('nav.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('nav-placeholder').innerHTML = html);
-    </script>
-  <section class="p-10 max-w-2xl mx-auto">
-    <h2 class="text-3xl font-semibold text-[#dfa6ad] mb-4">RSVP</h2>
-    <form id="rsvpForm" class="space-y-4" action="https://sheetmonkey.io/form/your-form-id" method="POST">
-      <input type="text" name="name" placeholder="Your Name" class="w-full p-2 border rounded" required />
-      <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-2 border rounded" required />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RSVP | Carmen & Tyler</title>
+<link rel="stylesheet" href="css/main.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIn6avhBvpXAT6u4i4lk3J7Gx6N9twjmt63oSq2xN0O3bEh-u4dun8324e0I5T6Hlg/exec';
+  let invitedNames = [];
 
-      <div id="eventOptions" class="hidden space-y-2">
-        <label><input type="checkbox" name="attending[]" value="Ceremony" /> Ceremony</label><br />
-        <label><input type="checkbox" name="attending[]" value="Reception" /> Reception</label><br />
-        <label id="rehearsalOption" class="hidden"><input type="checkbox" name="attending[]" value="Rehearsal Dinner" /> Rehearsal Dinner</label>
-      </div>
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch(`${SCRIPT_URL}?action=list`)
+      .then(res => res.json())
+      .then(data => {
+        invitedNames = data.names || [];
+        populateNameDatalist();
+      });
 
-      <textarea name="notes" placeholder="Dietary restrictions or a note for us :)" class="w-full p-2 border rounded"></textarea>
-      <button type="submit" class="bg-[#93a664] text-white px-4 py-2 rounded-full">Submit RSVP</button>
-    </form>
-  </section>
-  <script>
-    const guestList = {
-      "alex@example.com": ["Ceremony", "Reception", "Rehearsal Dinner"],
-      "jamie@example.com": ["Ceremony", "Reception"]
-    };
-    const emailInput = document.getElementById("email");
-    const eventOptions = document.getElementById("eventOptions");
-    const rehearsalOption = document.getElementById("rehearsalOption");
-    emailInput.addEventListener("blur", () => {
-      const email = emailInput.value.toLowerCase();
-      if (guestList[email]) {
-        eventOptions.classList.remove("hidden");
-        rehearsalOption.classList.toggle("hidden", !guestList[email].includes("Rehearsal Dinner"));
-      } else {
-        eventOptions.classList.add("hidden");
-        rehearsalOption.classList.add("hidden");
-      }
+    const params = new URLSearchParams(location.search);
+    const name = params.get('name');
+    if (!name) {
+      document.getElementById('step-name').classList.remove('hidden');
+    } else {
+      checkRegistration(name);
+    }
+  });
+
+  function populateNameDatalist() {
+    const dataList = document.getElementById('invited-names');
+    invitedNames.forEach(n => {
+      const option = document.createElement('option');
+      option.value = n;
+      dataList.appendChild(option);
     });
-  </script>
+  }
+
+  function checkRegistration(name) {
+    fetch(`${SCRIPT_URL}?action=check&name=${encodeURIComponent(name)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.already) {
+          document.getElementById('already-registered').classList.remove('hidden');
+        } else {
+          showForm(name, data);
+        }
+      });
+  }
+
+  function showForm(name, data) {
+    const sec = document.getElementById('step-rsvp');
+    sec.classList.remove('hidden');
+    document.getElementById('guest-name').textContent = name;
+
+    // Brunch is always shown if invited:
+    document.getElementById('brunch-row').classList.remove('hidden');
+    document.getElementById('primaryBrunch').disabled = false;
+
+    // === PRIMARY REHEARSAL ===
+    const primaryRehearsal = document.getElementById('primaryRehearsal');
+    if (data.invitedToRehearsal) {
+      document.getElementById('rehearsal-row').classList.remove('hidden');
+      primaryRehearsal.disabled = false;
+    } else {
+      document.getElementById('rehearsal-row').classList.add('hidden');
+      primaryRehearsal.disabled = true;
+    }
+
+    // === EXTRA-INVITE LOGIC ===
+    // only show this if they actually have an extra invite slot AND that invitee hasn't already RSVPed
+    if (data.extraInviteName && !data.partnerAlready) {
+        const extraOptionRow = document.getElementById('extra-option-row');
+        const extraOption    = document.getElementById('extraOption');
+
+        // show + enable the dropdown
+        extraOptionRow.classList.remove('hidden');
+        extraOption.disabled = false;
+        document.getElementById('extra-name-label').textContent = data.extraInviteName;
+
+        extraOption.addEventListener('change', e => {
+        const show = e.target.value === 'yes';
+        document.getElementById('extra-group').classList.toggle('hidden', !show);
+
+        // Ceremony
+        document.getElementById('extraDinner').disabled = !show;
+
+        // Brunch
+        document.getElementById('extra-brunch-row').classList.toggle('hidden', !show);
+        document.getElementById('extraBrunch').disabled = !show;
+
+        // Rehearsal (only if invited at all)
+        if (show && data.invitedToRehearsal) {
+            document.getElementById('extra-rehearsal-row').classList.remove('hidden');
+            document.getElementById('extraRehearsal').disabled = false;
+        } else {
+            document.getElementById('extra-rehearsal-row').classList.add('hidden');
+            document.getElementById('extraRehearsal').disabled = true;
+        }
+
+        // Notes
+        document.getElementById('extraNotes').disabled = !show;
+        });
+    }
+
+    // === PLUS-ONE LOGIC ===
+    if (data.allowPlusOne) {
+      const plusOne = document.getElementById('plusOne');
+      document.getElementById('plusone-row').classList.remove('hidden');
+      plusOne.disabled = false;
+
+      plusOne.addEventListener('change', e => {
+        const show = e.target.value === 'yes';
+        document.getElementById('plusone-name-row').classList.toggle('hidden', !show);
+        document.getElementById('plusOneName').disabled = !show;
+
+        // Plus-one brunch
+        document.getElementById('plusone-brunch-row').classList.toggle('hidden', !show);
+        document.getElementById('plusOneBrunch').disabled = !show;
+
+        // Plus-one rehearsal only if invitedToRehearsal
+        if (show && data.invitedToRehearsal) {
+          document.getElementById('plusone-rehearsal-row').classList.remove('hidden');
+          document.getElementById('plusOneRehearsal').disabled = false;
+        } else {
+          document.getElementById('plusone-rehearsal-row').classList.add('hidden');
+          document.getElementById('plusOneRehearsal').disabled = true;
+        }
+
+        document.getElementById('plusOneNotes').disabled = !show;
+      });
+    }
+
+    // If there's a child and I'm the first to RSVP
+    if (data.child && !data.partnerAlready && data.extraInviteName) {
+        const childInfo = document.getElementById('child-info');
+        childInfo.textContent =
+            `You will also be RSVPing for ${data.child}. ` +
+            `If their choices differ, please mention it in your notes or contact us.`;
+        childInfo.classList.remove('hidden');
+    }
+
+
+    // If partnerAlready and there's a child, update that message too
+    if (data.partnerAlready && data.child) {
+        const partnerInfo = document.getElementById('partner-locked-info');
+        partnerInfo.textContent =
+            `${data.extraInviteName} has already RSVPed for themselves and ${data.child}. `
+    }
+
+    if (data.partnerAlready) {
+        const info = document.getElementById('partner-locked-info');
+        // data.extraInviteName holds the partner's name (or primary’s name if this is the extra)
+        info.textContent = `${data.extraInviteName} has already RSVPed.`;
+        info.classList.remove('hidden');
+    }
+
+    sec.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault(); // prevent default navigation
+
+        // Validate only visible selects
+        const selects = Array.from(e.target.querySelectorAll('select'))
+        .filter(sel => sel.offsetParent !== null && !sel.disabled);
+        for (let sel of selects) {
+        if (sel.value === '') {
+            alert('Please complete all required fields.');
+            return;
+        }
+        }
+
+        // Ensure guest name is provided if bringing an unspecified guest
+        const plusOneSelect = document.getElementById('plusOne');
+        if (plusOneSelect && plusOneSelect.offsetParent !== null && plusOneSelect.value === 'yes') {
+        const guestNameInput = document.getElementById('plusOneName');
+        if (!guestNameInput.value.trim()) {
+            alert('Please enter your guest\'s name.');
+            return;
+        }
+        }
+
+        const f = e.target;
+        const payload = { action: 'submit', name };
+
+        // Primary RSVP data
+        payload.primaryDinner = f.primaryDinner.value;
+        payload.primaryBrunch = f.primaryBrunch.value;
+        if (data.invitedToRehearsal) payload.primaryRehearsal = f.primaryRehearsal.value;
+        payload.primaryNotes = f.primaryNotes.value;
+
+        // Partner RSVP if opted in
+        if (data.extraInviteName && !data.partnerAlready && f.extraOption.value === 'yes') {
+        payload.extraInviteName = data.extraInviteName;
+        payload.extraDinner = f.extraDinner.value;
+        payload.extraBrunch = f.extraBrunch.value;
+        if (data.invitedToRehearsal) payload.extraRehearsal = f.extraRehearsal.value;
+        payload.extraNotes = f.extraNotes.value;
+        }
+
+        // Generic plus-one: include the flag and details
+        payload.plusOne = f.plusOne.value;
+        if (data.allowPlusOne && f.plusOne.value === 'yes') {
+        payload.plusOneName = f.plusOneName.value;
+        payload.plusOneDinner = f.plusOneDinner.value;
+        payload.plusOneBrunch = f.plusOneBrunch.value;
+        if (data.invitedToRehearsal) payload.plusOneRehearsal = f.plusOneRehearsal.value;
+        payload.plusOneNotes = f.plusOneNotes.value;
+        }
+
+        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+        .then(res => res.json())
+        .then(result => {
+            document.getElementById('step-thanks').classList.remove('hidden');
+            sec.remove();
+        });
+    });
+  }
+</script>
+</head>
+<body class="bg-[#f3ede6] font-serif min-h-screen p-6">
+    <header id="site-nav" class="fixed top-0 w-full z-50"></header>
+    <script>
+    fetch('nav.html')
+        .then(res => res.text())
+        .then(html => document.getElementById('site-nav').innerHTML = html);
+    </script>
+
+<!-- Step 1: Enter Name -->
+<div id="step-name" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
+    <h2 class="text-2xl font-semibold mb-4">Enter Your Name to RSVP</h2>
+    <form onsubmit="event.preventDefault(); window.location.search='?name='+encodeURIComponent(this.name.value)">
+    <input list="invited-names" name="name" required placeholder="Your full name" class="w-full p-2 border rounded mb-4" />
+    <datalist id="invited-names"></datalist>
+    <button type="submit" class="w-full py-2 bg-[#bf6372] text-white rounded">Continue</button>
+    </form>
+</div>
+
+<!-- Already Registered -->
+<div id="already-registered" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
+    <h2 class="text-xl font-semibold text-red-600">Already RSVPed</h2>
+    <p>To update your RSVP, email <a href="mailto:rsvp@ourwedding.com" class="underline">rsvp@ourwedding.com</a>.</p>
+</div>
+
+<!-- Step 2: RSVP Form -->
+<div id="step-rsvp" class="max-w-lg mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
+    <h2 class="text-2xl font-semibold mb-2">Hello, <span id="guest-name"></span>!</h2>
+    <p id="partner-locked-info" class="text-sm italic mb-4 hidden">Your partner has already RSVPed.</p>
+    <p id="child-info" class="text-sm italic mb-4 hidden"></p>
+    <form>
+    <!-- Primary Group -->
+    <fieldset class="mb-6">
+        <legend class="font-semibold">Your RSVP</legend>
+        <div class="mb-4">
+        <label class="block font-medium">Attending ceremony?</label>
+        <select id="primaryDinner" name="primaryDinner" class="w-full p-2 border rounded">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div id="brunch-row" class="mb-4 hidden">
+        <label class="block font-medium">Attending brunch?</label>
+        <select id="primaryBrunch" name="primaryBrunch" class="w-full p-2 border rounded">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div id="rehearsal-row" class="mb-4">
+        <label class="block font-medium">Rehearsal Dinner?</label>
+        <select id="primaryRehearsal" name="primaryRehearsal" class="w-full p-2 border rounded">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div class="mb-4">
+        <label class="block font-medium">Song requests and dietary restrictions</label>
+        <textarea name="primaryNotes" rows="2" class="w-full p-2 border rounded"></textarea>
+        </div>
+    </fieldset>
+
+    <!-- Option to RSVP for Partner -->
+    <div id="extra-option-row" class="mb-6 hidden">
+        <label class="block font-medium">RSVP also for <span id="extra-name-label"></span>?</label>
+        <select id="extraOption" name="extraOption" class="w-full p-2 border rounded">
+        <option value="" disabled selected>Select...</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        </select>
+    </div>
+
+    <!-- Extra Invite Group -->
+    <fieldset id="extra-group" class="mb-6 hidden">
+        <legend class="font-semibold">RSVP for <span id="extra-name-label"></span></legend>
+        <div class="mb-4">
+        <label class="block font-medium">Attending ceremony?</label>
+        <select id="extraDinner" name="extraDinner" class="w-full p-2 border rounded">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div id="extra-brunch-row" class="mb-4 hidden">
+        <label class="block font-medium">Attending brunch?</label>
+        <select id="extraBrunch" name="extraBrunch" class="w-full p-2 border rounded">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div id="extra-rehearsal-row" class="mb-4">
+        <label class="block font-medium">Rehearsal Dinner?</label>
+        <select id="extraRehearsal" name="extraRehearsal" class="w-full p-2 border rounded">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div class="mb-4">
+        <label class="block font-medium">Song requests and dietary restrictions</label>
+        <textarea id="extraNotes" name="extraNotes" rows="2" class="w-full p-2 border rounded"></textarea>
+        </div>
+    </fieldset>
+
+    <!-- Generic Plus-One (hidden if extra invite or not allowed) -->
+    <div id="plusone-row" class="mb-6 hidden">
+        <label class="block font-medium">Bringing a guest?</label>
+        <select id="plusOne" name="plusOne" class="w-full p-2 border rounded">
+        <option value="" disabled selected>Select...</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        </select>
+    </div>
+    <div id="plusone-name-row" class="mb-6 hidden">
+        <label class="block font-medium">Guest’s name</label>
+        <input id="plusOneName" name="plusOneName" placeholder="Full name" class="w-full p-2 border rounded mb-4" />
+        <div id="plusone-ceremony-row" class="mb-4">
+        <label class="block font-medium">Attending ceremony?</label>
+        <select id="plusOneDinner" name="plusOneDinner" class="w-full p-2 border rounded mb-4">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div id="plusone-brunch-row" class="mb-4 hidden">
+        <label class="block font-medium">Attending brunch?</label>
+        <select id="plusOneBrunch" name="plusOneBrunch" class="w-full p-2 border rounded mb-4">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <div id="plusone-rehearsal-row" class="mb-4">
+        <label class="block font-medium">Rehearsal Dinner?</label>
+        <select id="plusOneRehearsal" name="plusOneRehearsal" class="w-full p-2 border rounded mb-4">
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        </div>
+        <label class="block font-medium">Song requests and dietary restrictions</label>
+        <textarea id="plusOneNotes" name="plusOneNotes" rows="2" class="w-full p-2 border rounded"></textarea>
+    </div>
+
+    <button type="submit" class="w-full py-2 bg-[#8385be] text-white rounded">Submit RSVP</button>
+    </form>
+</div>
+
+<!-- Thank You -->
+<div id="step-thanks" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
+    <h2 class="text-2xl font-semibold mb-2">Thank you!</h2>
+    <p>Your RSVP has been recorded.</p>
+</div>
 </body>
 </html>

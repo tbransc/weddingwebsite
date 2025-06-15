@@ -7,7 +7,21 @@ html {
 
 body {
   font-family: 'Merriweather', serif;
+  
+  margin: 0;
 }
+
+#nav-placeholder {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white; /* match your header bg */
+  }
+  
+#nav-placeholder > header {
+    position: static !important;
+  }
 
 .nav-item {
   position: relative;

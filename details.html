@@ -4,16 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event Details | Carmen & Tyler</title>
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/main.css" />
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Merriweather + Great Vibes Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet" />
-</head>
-<body class="bg-[#d7d3c7] text-gray-800 pt-24 font-serif">
+  <link rel="stylesheet" href="css/main.css" />
 
-  <!-- Navigation Include -->
+  <!-- Blob Styles -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    .blob {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      width: 10rem;
+      height: 10rem;
+      transform: translateX(-50%);
+      border-radius: 42% 58% 56% 44% / 56% 42% 58% 44%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .blob h2 {
+      font-size: 2rem;
+      color: #fff;
+      margin: 0;
+    }
+  </style>
+</head>
+<body class="bg-[#f3ede6] text-gray-800">
+
+  <!-- Navigation -->
   <header id="site-nav" class="fixed top-0 w-full z-50"></header>
   <script>
     fetch('nav.html')
@@ -21,35 +40,124 @@
       .then(html => document.getElementById('site-nav').innerHTML = html);
   </script>
 
-  <!-- Date Blob -->
-  <section class="relative flex justify-center items-center h-80 mt-12">
-    <div class="absolute inset-0 flex justify-center items-center">
-      <div class="w-3/4 h-3/4" 
-           style="background: url('images/poncecityroof.jpeg') center/cover; background-size: cover; border-radius: 42% 58% 56% 44% / 56% 42% 58% 44%;">
+  <!-- Content wrapper -->
+  <main class="mt-16 max-w-4xl mx-auto px-4">
+
+  <!-- Friday -->
+  <section class="relative py-16">
+    <div class="blob bg-[#93a664]"><h2 class="text-5xl">Friday</h2></div>
+    <h3 class="mt-40 mb-4 text-center text-4xl font-semibold text-gray-800">
+      Rehearsal Dinner
+    </h3>
+    <div class="flex flex-col md:flex-row items-center md:space-x-8">
+      <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8 text-center md:text-right">
+        <ul class="list-none text-2xl space-y-4 text-center md:text-right">
+          <li>6-9pm</li>
+          <li>Ecco Buckhead</li>
+          <li><a href="https://www.google.com/maps/dir//3586+Peachtree+Rd+NE,+Atlanta,+GA+30326/..." class="text-[#bf6372] hover:underline font-semibold">3586 Peachtree Rd NE, Atlanta, GA 30326</a></li>
+          <li>Family and bridal party only</li>
+          <li>Valet parking cost will be covered (DOUBLE CHECK)</li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 flex justify-start">
+        <img src="images/detailswine.png" alt="Friday Wine Tasting" class="w-full max-w-xs border-none" />
       </div>
     </div>
-    <h1 class="relative text-gray-100 text-6xl italic text-center drop-shadow-lg" style="font-family: 'Great Vibes', cursive;">September 27, 2025</h1>
   </section>
 
-  <!-- Details Blob Card -->
-  <main class="max-w-4xl mx-auto mt-16 mb-16 relative">
-    <div class="absolute -top-16 -left-16 w-48 h-48"
-         style="background: url('images/poncesign.jpg') center/cover; background-size: cover; border-radius: 52% 48% 37% 63% / 49% 57% 43% 51%;">
+  <!-- Saturday -->
+  <section class="relative py-16">
+    <div class="blob bg-[#bf6372]"><h2 class="text-5xl">Saturday</h2></div>
+    <h3 class="mt-40 mb-4 text-center text-4xl font-semibold text-gray-800">
+      Wedding day!
+    </h3>
+    <div class="flex flex-col md:flex-row-reverse items-center md:space-x-8">
+      <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8 text-center md:text-right">
+        <ul class="list-none text-2xl space-y-4 text-center md:text-left">
+          <li></li>
+          <li>The Roof at Ponce City Market</li>
+          <li><a href="https://www.google.com/maps?..." class="text-[#bf6372] hover:underline font-semibold">675 Ponce De Leon Ave NE, Atlanta, GA 30308</a></li>
+          <li>5pm - Venue opens</li>
+          <li>5:30pm - Ceremony begins</li>
+          <li>6pm - Cocktail hour</li>
+          <li>7-11pm - Dinner and dancing</li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 flex justify-end">
+        <img src="images/detailsrings.png" alt="Saturday Rings" class="w-full max-w-xs border-none" />
+      </div>
     </div>
-    <div class="bg-white bg-opacity-90 p-12 rounded-2xl shadow-lg relative">
-      <h2 class="text-4xl font-semibold text-[#bf6372] mb-6" style="font-family: 'Great Vibes', cursive;">Event Details</h2>
-      <p class="text-lg mb-3"><strong>Location:</strong> Ponce City Rooftop, Atlanta, Georgia</p>
-      <p class="text-lg mb-3"><strong>Schedule:</strong></p>
-      <ul class="list-disc list-inside text-lg space-y-1">
-        <li>5:00 PM – Venue Opens</li>
-        <li>5:30 PM – Ceremony</li>
-        <li>6:00 PM – Cocktail Hour</li>
-        <li>7:00 PM – Dinner & Toasts</li>
-        <li>9:00 PM – Dancing</li>
-        <li>11:00 PM – Sendoff</li>
-      </ul>
+  </section>
+
+  <!-- Sunday Brunch -->
+  <section class="relative py-16">
+    <div class="blob bg-[#8385be]"><h2 class="text-5xl">Sunday</h2></div>
+    <h3 class="mt-40 mb-4 text-center text-4xl font-semibold text-gray-800">
+      Morning After Brunch
+    </h3>
+    <div class="flex flex-col md:flex-row items-center md:space-x-8">
+      <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8 text-center md:text-right">
+        <ul class="list-none text-2xl space-y-4 text-center md:text-right">
+          <li>Drop in anytime from 9-11am</li>
+          <li>The Nook</li>
+          <li><a href="https://www.google.com/maps/dir//1144+Piedmont+Ave+NE,+Atlanta,+GA+30309/..." class="text-[#bf6372] hover:underline font-semibold">1144 Piedmont Ave NE, Atlanta, GA 30309</a></li>
+          <li>Buffet style brunch spread</li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 flex justify-start">
+        <img src="images/detailseggs.png" alt="Sunday Eggs" class="w-full max-w-xs border-none" />
+      </div>
     </div>
-  </main>
+  </section>
+
+  <!-- Where to Stay -->
+  <section class="relative py-16">
+    <h3 class="mb-4 text-center text-4xl font-semibold text-gray-800">
+      Where to Stay
+    </h3>
+    <div class="flex flex-col md:flex-row-reverse items-center md:space-x-8">
+      <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8 text-center md:text-right">
+        <ul class="list-none text-2xl space-y-4 text-center md:text-left">
+          <li>
+            We have a hotel block at Scout Living, which is a one minute walk from Ponce City Market.
+            <a href="https://www.placemakr.com/locations/atlanta/scout-living#" class="text-[#bf6372] hover:underline font-semibold">Click here</a>
+            for photos but please book using
+            <a href="https://forms.monday.com/forms/..." class="text-[#bf6372] hover:underline font-semibold">this form</a>.
+            The form will show prices as well.
+          </li>
+          <li>
+            There are tons of other hotels and Airbnbs in the area as well – Hotel Clairmont and The Darwin are both walking distance.
+          </li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 flex justify-end">
+        <img src="images/detailshotel.png" alt="Hotel Info" class="w-full max-w-xs border-none" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Things to Do -->
+  <section class="relative py-16">
+    <h3 class="mb-4 text-center text-4xl font-semibold text-gray-800">
+      Things to Do
+    </h3>
+    <div class="flex flex-col md:flex-row items-center md:space-x-8">
+      <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8 text-center md:text-right">
+        <ul class="list-none text-2xl space-y-4 text-center md:text-right">
+          <li>
+            In your free time, we would recommend walking the Beltline or around Piedmont Park. A visit to the Georgia Aquarium is fun too, especially with kids! Also, you can look downstairs at Ponce City Market for a fun food hall! For any restaurant recommendations, feel free to reach out to us.
+          </li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 flex justify-start">
+        <img src="images/detailsatlanta.png" alt="Atlanta Fun" class="w-full max-w-xs border-none" />
+      </div>
+    </div>
+  </section>
+
+</main>
+
+  
 
 </body>
 </html>

@@ -2,23 +2,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registry | Carmen & Tyler</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/main.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RSVP | Carmen & Tyler</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#efa522] text-white pt-24">
-    <div id="nav-placeholder"></div>
+<body class="bg-[#f3ede6] text-gray-800">
+    <header id="site-nav" class="fixed top-0 w-full z-50"></header>
     <script>
-      fetch('nav.html')
+    fetch('nav.html')
         .then(res => res.text())
-        .then(html => document.getElementById('nav-placeholder').innerHTML = html);
+        .then(html => document.getElementById('site-nav').innerHTML = html);
     </script>
-  <section class="p-10 text-center">
-    <h2 class="text-3xl font-semibold mb-4">Registry</h2>
-    <p>We are registered at Zola, Amazon, and Crate & Barrel.</p>
-    <a href="#" class="inline-block mt-4 bg-white text-[#efa522] font-semibold px-4 py-2 rounded-full">View Our Registry</a>
-  </section>
+    
+    <section id="registry" class="registry-section">
+        <h2>Registry:</h2>
+        <!-- 2) Drop in the Zola embed snippet -->
+        <a
+        class="zola-registry-embed"
+        href="https://www.zola.com/registry/tylerandcarmenseptember27"
+        data-registry-key="tylerandcarmenseptember27"
+        >
+        View Our Zola Registry
+        </a>
+        <script>
+        !function(e,t,n){
+            var s,a=e.getElementsByTagName(t)[0];
+            e.getElementById(n)||(s=e.createElement(t),
+            s.id=n,s.async=!0,
+            s.src="https://widget.zola.com/js/widget.js",
+            a.parentNode.insertBefore(s,a))
+        }(document,"script","zola-wjs");
+        </script>
+    </section>
 </body>
 </html>
