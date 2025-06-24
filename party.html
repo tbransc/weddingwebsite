@@ -14,6 +14,14 @@
   <header id="site-nav" class="fixed top-0 w-full z-50"></header>
 
 
+  <!-- Overlay HTML (place immediately inside <body>) -->
+  <div
+  id="scroll-overlay"
+  class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center md:hidden"
+  >
+  <img src="images/scroll.gif" alt="scroll"/>
+  </div>
+
   <!-- Fixed Cards Stack -->
   <div id="cards">
     <!-- Card 1: Abby -->
@@ -37,8 +45,8 @@
         </div>
     </div>
     <!-- Card 2: Austin -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[8] transform -translate-x-1/2 transition-transform">
+        <img src="images/austin.jpg" alt="Austin" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -57,8 +65,8 @@
           </div>
       </div>
     <!-- Card 3: Brooke -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[7] transform -translate-x-1/2 transition-transform">
+        <img src="images/brooke.jpg" alt="Brooke" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -77,8 +85,8 @@
           </div>
       </div>
     <!-- Card 4: Holland -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[6] transform -translate-x-1/2 transition-transform">
+        <img src="images/holland.jpg" alt="Holland" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -97,8 +105,8 @@
           </div>
       </div>
     <!-- Card 5: Atticus -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[5] transform -translate-x-1/2 transition-transform">
+        <img src="images/atticus.jpg" alt="Atticus" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -117,8 +125,8 @@
           </div>
       </div>
     <!-- Card 6: Kyrsten -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[4] transform -translate-x-1/2 transition-transform">
+        <img src="images/kyrsten.jpg" alt="Kyrsten" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -137,8 +145,8 @@
           </div>
       </div>
     <!-- Card 7: Lilli -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[3] transform -translate-x-1/2 transition-transform">
+        <img src="images/lilli.jpg" alt="Lilli" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -157,8 +165,8 @@
           </div>
       </div>
     <!-- Card 8: Clark -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[2] transform -translate-x-1/2 transition-transform">
+        <img src="images/clark.jpg" alt="Abby" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -177,8 +185,8 @@
           </div>
       </div>
     <!-- Card 9: McKenzie -->
-    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[9] transform -translate-x-1/2 transition-transform">
-        <img src="images/abby.jpeg" alt="Abby" class="w-full h-full object-cover" />
+    <div class="card fixed left-1/2 h-[80vh] sm:h-[60vh] md:h-[85vh] aspect-[9/16] rounded-2xl shadow-xl overflow-hidden z-[1] transform -translate-x-1/2 transition-transform">
+        <img src="images/mckenzie.jpg" alt="McKenzie" class="w-full h-full object-cover" />
         <div class="absolute left-6
               bottom-4           /*  0.5rem on phones */
               sm:bottom-8        /*  2rem on ≥640px */
@@ -243,6 +251,26 @@
     window.addEventListener('scroll',  updateCards);
     window.addEventListener('resize',  updateCards);
     });
+
+    (function() {
+    const overlay = document.getElementById('scroll-overlay');
+    // hide the overlay
+    const dismiss = () => {
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      // optional: remove it from the flow after fade-out
+      setTimeout(() => overlay.remove(), 300);
+      // remove listeners
+      window.removeEventListener('touchstart', dismiss);
+      window.removeEventListener('click', dismiss);
+      window.removeEventListener('wheel', dismiss);
+      window.removeEventListener('keydown', dismiss);
+    };
+    // listen once for any of these
+    window.addEventListener('touchstart', dismiss, { once: true });
+    window.addEventListener('click',     dismiss, { once: true });
+    window.addEventListener('wheel',     dismiss, { once: true });
+    window.addEventListener('keydown',   dismiss, { once: true });
+  })();
   </script>
 </body>
 </html>
