@@ -8,23 +8,19 @@
   <link rel="stylesheet" href="css/main.css" />
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Merriweather Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
 </head>
-<body class="bg-[#d7d3c7] text-gray-800 font-serif leading-relaxed">
+<body class="bg-[#f3ede6] text-gray-800">
 
   <!-- Navigation Include -->
-  <header id="site-nav"></header>
+  <header id="site-nav" class="fixed top-0 w-full z-50"></header>
   <script>
     fetch('nav.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('site-nav').innerHTML = data;
-      });
+      .then(res => res.text())
+      .then(html => document.getElementById('site-nav').innerHTML = html);
   </script>
 
   <!-- FAQ Section (pushed down to clear fixed header) -->
-  <section id="faq" class="pt-32 pb-16 bg-[#d7d3c7]">
+  <section id="faq" class="pt-32 pb-16 bg-[#f3ede6]">
     <div class="container mx-auto px-6">
       <h2 class="text-4xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
       <div class="space-y-6">
