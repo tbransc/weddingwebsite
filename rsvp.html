@@ -11,25 +11,38 @@
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIn6avhBvpXAT6u4i4lk3J7Gx6N9twjmt63oSq2xN0O3bEh-u4dun8324e0I5T6Hlg/exec';
   let invitedNames = [];
 
+  function showLoading() {
+    document.getElementById('loading-overlay').classList.remove('hidden');
+  }
+  function hideLoading() {
+    document.getElementById('loading-overlay').classList.add('hidden');
+  }
+
+  window.addEventListener('pageshow', event => {
+    const params = new URLSearchParams(location.search);
+    if (!params.has('name')) {
+      hideLoading();
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
-    // Fetch names but don't populate yet
+    // 1) Fetch the names
     fetch(`${SCRIPT_URL}?action=list`)
       .then(res => res.json())
-      .then(data => {
-        invitedNames = data.names || [];
-      });
+      .then(data => { invitedNames = data.names || []; });
 
-    // Get references
+    // 2) Set up the “Enter Name” form
     const nameInput = document.querySelector('input[name="name"]');
     const dataList  = document.getElementById('invited-names');
+    const nameForm  = document.getElementById('name-form');
 
     // Only populate datalist once user types ≥ 3 chars
     nameInput.addEventListener('input', e => {
       const val = e.target.value.trim().toLowerCase();
-      dataList.innerHTML = '';           // clear old options
+      dataList.innerHTML = '';
       if (val.length >= 3) {
         invitedNames
-          .filter(n => n.toLowerCase().includes(val))   // or use .startsWith(val)
+          .filter(n => n.toLowerCase().includes(val))
           .forEach(n => {
             const opt = document.createElement('option');
             opt.value = n;
@@ -38,9 +51,21 @@
       }
     });
 
-    // Rest of your name‐step logic…
+      // Validate against our list before proceeding
+    nameForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const val = nameInput.value.trim();
+      if (invitedNames.includes(val)) {
+        showLoading();
+        window.location.search = '?name=' + encodeURIComponent(val);
+      } else {
+        alert('Please select a valid name from the list');
+      }
+    });
+
+    // 3) If someone’s already in the URL, show the RSVP form directly
     const params = new URLSearchParams(location.search);
-    const name = params.get('name');
+    const name   = params.get('name');
     if (!name) {
       document.getElementById('step-name').classList.remove('hidden');
     } else {
@@ -49,15 +74,21 @@
   });
 
   function checkRegistration(name) {
+    showLoading()
     fetch(`${SCRIPT_URL}?action=check&name=${encodeURIComponent(name)}`)
       .then(res => res.json())
       .then(data => {
         if (data.already) {
           document.getElementById('already-registered').classList.remove('hidden');
+          hideLoading();
         } else {
           showForm(name, data);
         }
-      });
+      })
+      .catch(() => {
+        hideLoading();
+        alert('Error loading RSVP form — please try again.');
+      });;
   }
 
   function showForm(name, data) {
@@ -166,10 +197,17 @@
         partnerInfo.textContent =
             `${data.extraInviteName} has already RSVPed for themselves and ${data.child}. `
     }
+    hideLoading();
 
 
-    sec.querySelector('form').addEventListener('submit', e => {
-        e.preventDefault(); // prevent default navigation
+    const form = sec.querySelector('form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        // disable button to prevent duplicates
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting…';
 
         // Validate only visible selects
         const selects = Array.from(e.target.querySelectorAll('select'))
@@ -218,18 +256,42 @@
         if (data.invitedToRehearsal) payload.plusOneRehearsal = f.plusOneRehearsal.value;
         payload.plusOneNotes = f.plusOneNotes.value;
         }
-
-        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+        showLoading();
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        })
         .then(res => res.json())
         .then(result => {
-            document.getElementById('step-thanks').classList.remove('hidden');
-            sec.remove();
+          hideLoading();
+          document.getElementById('step-thanks').classList.remove('hidden');
+          sec.remove();
+        })
+        .catch(() => {
+          hideLoading();
+          // on error, re-enable so they can retry
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit RSVP';
+          alert('Something went wrong. Please try again.');
         });
-    });
+      });
   }
 </script>
 </head>
 <body class="bg-[#f3ede6] text-gray-800">
+
+<!-- Loading Overlay -->
+<div id="loading-overlay"
+class="hidden fixed inset-0 z-50 flex items-center justify-center bg-white">
+    <!-- Spinner (Tailwind + SVG) -->
+    <svg class="h-16 w-16 animate-spin text-[#bf6372]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+    </path>
+    </svg>
+</div>
+
     <header id="site-nav" class="fixed top-0 w-full z-50"></header>
     <script>
         fetch('nav.html')
@@ -240,18 +302,21 @@
 <!-- Step 1: Enter Name -->
 <div id="step-name" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
     <h2 class="text-2xl font-semibold mb-4">Enter Your Name to RSVP</h2>
-    <form onsubmit="event.preventDefault(); window.location.search='?name='+encodeURIComponent(this.name.value)">
-    <input list="invited-names" name="name" required placeholder="Your full name" class="w-full p-2 border rounded mb-4" />
-    <datalist id="invited-names"></datalist>
-    <button type="submit" class="w-full py-2 bg-[#bf6372] text-white rounded">Continue</button>
+    <form id="name-form">
+      <input list="invited-names" name="name" required placeholder="Your full name"
+             class="w-full p-2 border rounded mb-4" />
+      <datalist id="invited-names"></datalist>
+      <button type="submit" class="w-full py-2 bg-[#bf6372] text-white rounded">
+        Continue
+      </button>
     </form>
-</div>
+  </div>
 
-<!-- Already Registered -->
-<div id="already-registered" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
+  <!-- Already Registered -->
+  <div id="already-registered" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
     <h2 class="text-xl font-semibold text-red-600">Already RSVPed</h2>
     <p>To update your RSVP, email <a href="mailto:carmenwoodruff08@gmail.com" class="underline">carmenwoodruff08@gmail.com</a>.</p>
-</div>
+  </div>
 
 <!-- Step 2: RSVP Form -->
 <div id="step-rsvp" class="max-w-lg mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
@@ -383,6 +448,7 @@
 <div id="step-thanks" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-lg shadow hidden">
     <h2 class="text-2xl font-semibold mb-2">Thank you!</h2>
     <p>Your RSVP has been recorded.</p>
+</div>
 </div>
 </body>
 </html>
