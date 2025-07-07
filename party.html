@@ -12,16 +12,27 @@
 
   <!-- Navigation Include -->
   <header id="site-nav" class="fixed top-0 w-full z-50"></header>
+  
 
+    <div
+    id="scroll-overlay"
+    class="fixed inset-0 z-30 bg-black bg-opacity-60 flex items-center justify-center md:hidden"
+    >
+    <img src="images/scroll.gif" alt="scroll"/>
+    </div>
 
-  <!-- Overlay HTML (place immediately inside <body>) -->
-  <div
-  id="scroll-overlay"
-  class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center md:hidden"
-  >
-  <img src="images/scroll.gif" alt="scroll"/>
-  </div>
-
+<!-- Overlay HTML (place immediately inside <body>) -->
+    <div id="loading-overlay"
+    class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-white">
+        <!-- Spinner (Tailwind + SVG) -->
+        <svg class="h-16 w-16 animate-spin text-[#bf6372]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+        </path>
+        </svg>
+        <p class="mt-4 text-gray-700 text-lg">Images loading</p>
+    </div>
   <!-- Fixed Cards Stack -->
   <div id="cards">
     <!-- Card 1: Abby -->
@@ -213,64 +224,75 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const wrapper   = document.getElementById('site-nav');
-    let   realNav;        // will hold the actual injected <header class="fixed…">
+        // 0) Lock scrolling while spinner is showing
+        document.body.classList.add('overflow-hidden');
 
-    // 1) Define updateCards so it reads realNav.offsetHeight:
-    function updateCards() {
-        const vh      = window.innerHeight;
-        const headerH = realNav?.offsetHeight || 0;        // ← use the real nav’s height
-        const cardH   = cards[0]?.offsetHeight    || 0;
-        const free    = vh - headerH - cardH;
-        const topOff  = headerH + free / 2;
+        // 1) Inject nav & init cards (unchanged)…
+        const wrapper = document.getElementById('site-nav');
+        let realNav;
+        const cards = document.querySelectorAll('.card');
 
+        function updateCards() {
+        const vh = window.innerHeight;
+        const headerH = realNav?.offsetHeight || 0;
+        const cardH = cards[0]?.offsetHeight || 0;
+        const free = vh - headerH - cardH;
+        const topOff = headerH + free / 2;
 
-        cards.forEach((c, i) => {
+        cards.forEach((c,i) => {
             c.style.top = `${topOff}px`;
-            let prog = (window.scrollY - i * vh) / vh;
-            prog = Math.min(Math.max(prog, 0), 1);
-            c.style.transform  = `translate(-50%,0) translateX(${prog*window.innerWidth}px) rotate(${prog*15}deg)`;
-            c.style.opacity    = `${1 - prog}`;
+            let prog = (window.scrollY - i*vh)/vh;
+            prog = Math.min(Math.max(prog,0),1);
+            c.style.transform = `translate(-50%,0) translateX(${prog*window.innerWidth}px) rotate(${prog*15}deg)`;
+            c.style.opacity   = `${1-prog}`;
         });
-    }
+        }
 
-     // grab your cards once
-    const cards = document.querySelectorAll('.card');
-
-    // 2) Fetch & inject, then stash the realNav and call updateCards()
-    fetch('nav.html')
+        fetch('nav.html')
         .then(res => res.text())
         .then(html => {
             wrapper.innerHTML = html;
-            // wrapper’s first child is the real, fixed header
             realNav = wrapper.querySelector('header.fixed');
             updateCards();
-    });
+        });
 
-    // 3) hook scroll/resize
-    window.addEventListener('scroll',  updateCards);
-    window.addEventListener('resize',  updateCards);
-    });
+        window.addEventListener('scroll',  updateCards);
+        window.addEventListener('resize',  updateCards);
 
-    (function() {
-    const overlay = document.getElementById('scroll-overlay');
-    // hide the overlay
-    const dismiss = () => {
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-      // optional: remove it from the flow after fade-out
-      setTimeout(() => overlay.remove(), 300);
-      // remove listeners
-      window.removeEventListener('touchstart', dismiss);
-      window.removeEventListener('click', dismiss);
-      window.removeEventListener('wheel', dismiss);
-      window.removeEventListener('keydown', dismiss);
-    };
-    // listen once for any of these
-    window.addEventListener('touchstart', dismiss, { once: true });
-    window.addEventListener('click',     dismiss, { once: true });
-    window.addEventListener('wheel',     dismiss, { once: true });
-    window.addEventListener('keydown',   dismiss, { once: true });
-  })();
+        // 2) Wait for all card images to load
+        const loader = document.getElementById('loading-overlay');
+        const imgs   = document.querySelectorAll('.card img');
+        const loads  = Array.from(imgs).map(img =>
+        new Promise(resolve => {
+            if (img.complete && img.naturalWidth) {
+            resolve();
+            } else {
+            img.addEventListener('load',  resolve, { once: true });
+            img.addEventListener('error', resolve, { once: true });
+            }
+        })
+        );
+
+        Promise.all(loads).then(() => {
+        // fade out spinner
+        loader.classList.add('opacity-0');
+        setTimeout(() => {
+            // remove spinner and re-enable scroll
+            loader.remove();
+            document.body.classList.remove('overflow-hidden');
+
+            // now wire up scroll-overlay dismiss
+            const scrollOverlay = document.getElementById('scroll-overlay');
+            const dismissScroll = () => {
+            scrollOverlay.classList.add('opacity-0','pointer-events-none');
+            setTimeout(() => scrollOverlay.remove(), 300);
+            };
+            ['touchstart','click','wheel','keydown'].forEach(evt =>
+            window.addEventListener(evt, dismissScroll, { once: true })
+            );
+        }, 300);
+        });
+    });
   </script>
 </body>
 </html>
